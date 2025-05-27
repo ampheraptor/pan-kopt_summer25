@@ -15,12 +15,14 @@ public class ProtoMSCell : MonoBehaviour, IPointerClickHandler
     private int neighborMineCount = 0;
 
     [SerializeField] private TextMeshPro mText;
+    [SerializeField] private SpriteRenderer mCover;
 
     void Awake()
     {
         width = GetComponent<SpriteRenderer>().bounds.size.x;
         height = GetComponent<SpriteRenderer>().bounds.size.y;
-        mText = GetComponentInChildren<TextMeshPro>(); // Only one so OK
+        mCover.enabled = true;
+       
 
         //mText.enabled = false;
     }
@@ -51,11 +53,41 @@ public class ProtoMSCell : MonoBehaviour, IPointerClickHandler
         mText.text = (mine == true) ? "M" : "";
     }
 
-    public void GetNeighborMineCount()
+    public bool getMine()
+    {
+        return mine;
+    }
+
+    public void CountNeighborMines()
     {
         if (!mine)
         {
-            //for (int y = 0; y < )
+            int total = 0;
+            //Check every neighbor
+            for (int y = -1; y < 2; y++)
+            {
+                for (int x = -1; x < 2; x++)
+                {
+                    //Check if valid, this line should make sure we don't check outside of the 2d grid's index
+                    if (y + this.y > 0 && y + this.y < ProtoMSGrid.COLS && x + this.x > 0 && x + this.x < ProtoMSGrid.ROWS)
+                    {
+                        if (ProtoMSGrid.instance.GetCell(x + this.x, y + this.y).getMine())
+                        {
+                            //We don't need to skip ourselves because we are not a mine
+                            total++;
+                        }
+                        
+                    }
+                }
+            }
+
+            neighborMineCount = total; //It feels better to not update the referencable variable during a loop. IDK why
+            if (neighborMineCount > 0)
+            {
+                mText.text = neighborMineCount.ToString();
+            }
+
+
         }
         else
         {
@@ -68,6 +100,17 @@ public class ProtoMSCell : MonoBehaviour, IPointerClickHandler
         if (eventData.button == PointerEventData.InputButton.Left)
         {
             Debug.Log("Clicked " + name);
+            Reveal();
+        }
+    }
+
+    public void Reveal()
+    {
+        if (!revealed) //If not already revealed
+        {
+            //Reveal
+            revealed = true;
+            mCover.enabled = false;
         }
     }
     
