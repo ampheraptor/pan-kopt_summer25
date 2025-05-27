@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class ProtoMSGrid : MonoBehaviour
+public class ProtoMSGrid : Singleton<ProtoMSGrid>
 {
     private static readonly int ROWS = 7;
     private static readonly int COLS = 5;
@@ -12,7 +12,7 @@ public class ProtoMSGrid : MonoBehaviour
     [SerializeField] private GameObject cellPrefab;
 
 
-    private void CreateGrid() // HELLO!
+    private void CreateGrid() 
     {
         for (int y = 0; y < COLS; y++)
         {
@@ -28,6 +28,12 @@ public class ProtoMSGrid : MonoBehaviour
                 float newX = x * grid[x,y].getWidth();
                 float newY = y * grid[x,y].getHeight();
                 cell.transform.localPosition = new Vector3(newX,newY,0);
+
+                //Temporary Mine Testing
+                if (Random.Range(0,10) > 5)
+                {
+                    grid[x, y].setMine(true);
+                }
             }
         }
     }
