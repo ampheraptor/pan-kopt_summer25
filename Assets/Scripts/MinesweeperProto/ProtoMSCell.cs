@@ -13,6 +13,7 @@ public class ProtoMSCell : MonoBehaviour, IPointerClickHandler
     private int x, y;
 
     private int neighborMineCount = 0;
+    private int neighborFlagCount => GetNeighborFlagCount();
 
     [SerializeField] private TextMeshPro mText;
     [SerializeField] private SpriteRenderer mCover;
@@ -37,6 +38,26 @@ public class ProtoMSCell : MonoBehaviour, IPointerClickHandler
     public int GetNeighborMineCount()
     {
         return neighborMineCount;
+    }
+
+    public int GetNeighborFlagCount()
+    {
+        int total = 0;
+        for (int y = -1; y < 2; y++)
+        {
+            for (int x = -1; x < 2; x++)
+            {
+                //Check if valid, this line should make sure we don't check outside of the 2d grid's index
+                if (IsValidCoord(this.x + x, this.y + y))
+                {
+                    if (ProtoMSGrid.instance.GetCell(x + this.x, y + this.y).flagged)
+                    {
+                        total++;
+                    }
+                }
+            }
+        }
+        return total;
     }
 
     //Should only really be used for setting mines to true
@@ -80,8 +101,6 @@ public class ProtoMSCell : MonoBehaviour, IPointerClickHandler
             {
                 mText.text = neighborMineCount.ToString();
             }
-
-
         }
         else
         {
@@ -91,7 +110,7 @@ public class ProtoMSCell : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (eventData.button == PointerEventData.InputButton.Left)
+        if (eventData.button == PointerEventData.InputButton.Left) //left click - reveal
         {
             if (!flagged) //flagged mines are not allowed to be left-clicked - nothing will happen.
             {
@@ -104,26 +123,30 @@ public class ProtoMSCell : MonoBehaviour, IPointerClickHandler
                     RevealRecursive();
                 }
             }
-        } else if(eventData.button == PointerEventData.InputButton.Right) 
+        } else if(eventData.button == PointerEventData.InputButton.Right) //right click - for unrevealed, toggle flag. for revealed, if right # of flags, reveal adjacent.
         {
-            ToggleFlag();
+            if (!revealed) //revealed tiles cannot be flagged manually
+            {
+                ToggleFlag();
+            } else if (neighborFlagCount == neighborMineCount) //right click revealed reveals adjacents
+            { //only does this if flag count == mine count; i.e. you (probably) got the flags "correct"
+                RevealAdjacent(false);
+            }
+
         }
     } 
 
     void ToggleFlag()
-    {
-        if (!revealed) //revealed tiles cannot be flagged manually
+    { 
+        if (!flagged)
         {
-            if (!flagged)
-            {
-                FlagPlace();
-            }
-            else
-            {
-                FlagRemove();
-            }
+            FlagPlace();
         }
-    }
+        else
+        {
+            FlagRemove();
+        }
+}
 
     void FlagPlace()
     {
@@ -138,10 +161,10 @@ public class ProtoMSCell : MonoBehaviour, IPointerClickHandler
         mFlag.SetActive(false);
     }
 
-    public void RevealRecursive() //this is "Chording"
+    public void RevealRecursive(bool includeFlagged=true) //this is "Chording"
     {
         // base case
-        if (!mine && !revealed)
+        if (!revealed && (includeFlagged||!flagged))
         {
             RevealSingle();
             if (neighborMineCount == 0)
@@ -154,15 +177,33 @@ public class ProtoMSCell : MonoBehaviour, IPointerClickHandler
                         if (IsValidCoord(this.x + x, this.y + y))
                         {
                             //Don't need to check if it's not me because I am already revealed
-                            ProtoMSGrid.instance.GetCell(this.x + x, this.y + y).RevealRecursive();
+                            ProtoMSGrid.instance.GetCell(this.x + x, this.y + y).RevealRecursive(includeFlagged);
 
                         }
                     }
                 }
             }
-        }
+        } 
+    }
 
-        
+    public void RevealAdjacent(bool includeFlagged=false) //reveals all adjacent tiles regardless of contents. non-recursive.
+    { //"includeFlagged" means whether to reveal flagged tiles as well
+        //"chordZeroes" means that even though we are only revealing adjacent tiles, zero-neighbor tiles revealed this way will reveal their neighbors as well.
+        for (int y = -1; y < 2; y++)
+        {
+            for (int x = -1; x < 2; x++)
+            {
+                //Check if valid, this line should make sure we don't check outside of the 2d grid's index
+                if (IsValidCoord(this.x + x, this.y + y))
+                {
+                    ProtoMSCell c = ProtoMSGrid.instance.GetCell(this.x + x, this.y + y);
+                    if(includeFlagged || c.flagged == false)
+                    {
+                        c.RevealRecursive(includeFlagged);
+                    } 
+                }
+            }
+        }
     }
 
     public void RevealSingle() // For public use, reveals self
