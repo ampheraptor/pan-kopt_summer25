@@ -69,7 +69,7 @@ public class ProtoMSCell : MonoBehaviour, IPointerClickHandler
                 for (int x = -1; x < 2; x++)
                 {
                     //Check if valid, this line should make sure we don't check outside of the 2d grid's index
-                    if (y + this.y > 0 && y + this.y < ProtoMSGrid.COLS && x + this.x > 0 && x + this.x < ProtoMSGrid.ROWS)
+                    if (isValidCoord(this.x + x, this.y + y))
                     {
                         if (ProtoMSGrid.instance.GetCell(x + this.x, y + this.y).getMine())
                         {
@@ -100,17 +100,56 @@ public class ProtoMSCell : MonoBehaviour, IPointerClickHandler
         if (eventData.button == PointerEventData.InputButton.Left)
         {
             Debug.Log("Clicked " + name);
-            Reveal();
+            RevealRecursive();
         }
     }
 
-    public void Reveal()
+    public void RevealRecursive()
     {
-        if (!revealed) //If not already revealed
+        // base case
+        if (!mine && !revealed)
+        {
+            RevealSingle();
+            if (neighborMineCount == 0)
+            {
+                for (int y = -1; y < 2; y++)
+                {
+                    for (int x = -1; x < 2; x++)
+                    {
+                        //Check if valid, this line should make sure we don't check outside of the 2d grid's index
+                        if (isValidCoord(this.x + x, this.y + y))
+                        {
+                            //Don't need to check if it's not me because I am already revealed
+                            ProtoMSGrid.instance.GetCell(this.x + x, this.y + y).RevealRecursive();
+
+                        }
+                    }
+                }
+            }
+        }
+
+        
+    }
+
+    public void RevealSingle() // For public use
+    {
+        if (!revealed) //If not already revealed, might be redudnant check but just in case
         {
             //Reveal
             revealed = true;
             mCover.enabled = false;
+        }
+    }
+
+    public bool isValidCoord(int x, int y)
+    {
+        if (x > 0 && x < ProtoMSGrid.ROWS && y > 0 && y < ProtoMSGrid.COLS)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
     
