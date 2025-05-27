@@ -9,7 +9,7 @@ public class ProtoMSCell : MonoBehaviour, IPointerClickHandler
     private bool mine = false;
     private bool revealed = false;
 
-    private float width, height;
+  
     private int x, y;
 
     private int neighborMineCount = 0;
@@ -19,22 +19,14 @@ public class ProtoMSCell : MonoBehaviour, IPointerClickHandler
 
     void Awake()
     {
-        width = GetComponent<SpriteRenderer>().bounds.size.x;
-        height = GetComponent<SpriteRenderer>().bounds.size.y;
+        
         mCover.enabled = true;
        
 
         //mText.enabled = false;
     }
 
-    public float getWidth()
-    {
-        return width;
-    }
-    public float getHeight()
-    {
-        return height;
-    }
+    
 
     public void setXY(int x, int y)
     {
