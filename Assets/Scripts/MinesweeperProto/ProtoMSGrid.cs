@@ -12,7 +12,7 @@ public class ProtoMSGrid : MonoBehaviour
     [SerializeField] private GameObject cellPrefab;
 
 
-    private void CreateGrid()
+    private void CreateGrid() // HELLO!
     {
         for (int y = 0; y < COLS; y++)
         {
