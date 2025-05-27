@@ -15,6 +15,9 @@ public class ProtoMSGrid : Singleton<ProtoMSGrid>
     [SerializeField] private GameObject cellPrefab;
 
 
+    public int minesRandomMin;
+    public int minesRandomMax;
+    private int totalMines;
 
     private void Start()
     {
@@ -34,20 +37,27 @@ public class ProtoMSGrid : Singleton<ProtoMSGrid>
                 //Put it in the 2D Array
                 grid[x, y] = cell.GetComponent<ProtoMSCell>();
                 //Give cell it's 2D coords
-                grid[x,y].setXY(x, y);
+                grid[x,y].SetXY(x, y);
                 //Place it correctly
                 float newX = x * cellWidth;
                 float newY = y * cellHeight;
                 cell.transform.localPosition = new Vector3(newX,newY,0);
-
-                //Temporary Mine Testing
-                if (Random.Range(0,10) > 7)
-                {
-                    grid[x, y].setMine(true);
-                }
             }
         }
 
+        //place mines
+        totalMines = Random.Range(minesRandomMin, minesRandomMax);
+        if(totalMines <= ROWS*COLS)
+        {
+            for(int i = 0; i < totalMines; i++)
+            {
+                RandomEmptyCell().SetMine(true);
+            }
+        } else
+        {
+            Debug.Log("ERROR in ProtoMSGrid.cs: mine count exceeds cell count");
+        }
+        //set numbers
         for (int y = 0; y < COLS; y++)
         {
             for (int x = 0; x < ROWS; x++)
@@ -57,6 +67,17 @@ public class ProtoMSGrid : Singleton<ProtoMSGrid>
         }
     }
 
+    private ProtoMSCell RandomEmptyCell()
+    {
+        ProtoMSCell pms = grid[Random.Range(0, ROWS), Random.Range(0, COLS)];
+        if (pms.GetMine())
+        {
+            return RandomEmptyCell(); //keeps iterating through random cells until it finds one that isn't a mine
+            //for this reason, this function may cause an overflow if the # of mines placed exceeds the number of total cells
+            //so run a check first!
+        }
+        return pms;
+    }
     
 
     private void CenterMyself()
