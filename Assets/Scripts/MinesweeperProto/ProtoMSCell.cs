@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class ProtoMSCell : MonoBehaviour
+public class ProtoMSCell : MonoBehaviour, IPointerClickHandler
 {
     private bool mine = false;
     private bool revealed = false;
@@ -29,4 +30,13 @@ public class ProtoMSCell : MonoBehaviour
     {
         this.x = x; this.y = y;
     }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.button == PointerEventData.InputButton.Left)
+        {
+            Debug.Log("Clicked " + name);
+        }
+    }
+    
 }
