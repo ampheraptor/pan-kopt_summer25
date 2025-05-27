@@ -100,7 +100,15 @@ public class ProtoMSCell : MonoBehaviour, IPointerClickHandler
         if (eventData.button == PointerEventData.InputButton.Left)
         {
             Debug.Log("Clicked " + name);
-            RevealRecursive();
+            if (mine)
+            {
+                RevealSingle();
+            }
+            else
+            {
+                RevealRecursive();
+            }
+            
         }
     }
 
@@ -143,7 +151,7 @@ public class ProtoMSCell : MonoBehaviour, IPointerClickHandler
 
     public bool isValidCoord(int x, int y)
     {
-        if (x > 0 && x < ProtoMSGrid.ROWS && y > 0 && y < ProtoMSGrid.COLS)
+        if (x >= 0 && x < ProtoMSGrid.ROWS && y >= 0 && y < ProtoMSGrid.COLS)
         {
             return true;
         }
