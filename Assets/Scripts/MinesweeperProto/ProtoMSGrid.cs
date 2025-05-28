@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class ProtoMSGrid : Singleton<ProtoMSGrid>
 {
-    public static readonly int ROWS = 7;
-    public static readonly int COLS = 5;
+    [SerializeField] public static readonly int ROWS = 10;
+    [SerializeField] public static readonly int COLS = 10;
 
     private float cellWidth;
     private float cellHeight;
@@ -87,8 +87,8 @@ public class ProtoMSGrid : Singleton<ProtoMSGrid>
         float newY = transform.position.y;
         float lengthOfGrid = cellWidth * COLS;
         float heightOfGrid = cellHeight * ROWS;
-        newX = newX - (lengthOfGrid / 2);
-        newY = newY - (heightOfGrid / 2);
+        newX = newX - (lengthOfGrid / 2) + (cellWidth/2);
+        newY = newY - (heightOfGrid / 2) + (cellHeight /2); // ok literally don't know why this works. whatever
         transform.position = new Vector3(newX, newY, 0);
 
     }
