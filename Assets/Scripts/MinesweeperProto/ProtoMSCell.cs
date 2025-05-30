@@ -222,7 +222,7 @@ public class ProtoMSCell : MonoBehaviour, IPointerClickHandler
 
     public bool IsValidCoord(int x, int y)
     {
-        if (x >= 0 && x < ProtoMSGrid.ROWS && y >= 0 && y < ProtoMSGrid.COLS)
+        if (x >= 0 && x < ProtoMSGrid.instance.GetGridRows() && y >= 0 && y < ProtoMSGrid.instance.GetGridCols())
         {
             return true;
         }

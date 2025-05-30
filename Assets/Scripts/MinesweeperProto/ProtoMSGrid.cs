@@ -5,13 +5,14 @@ using UnityEngine;
 
 public class ProtoMSGrid : Singleton<ProtoMSGrid>
 {
-    [SerializeField] public static readonly int ROWS = 10;
-    [SerializeField] public static readonly int COLS = 10;
+    //These are constants but need to just be private so they can be exposed in the editor
+    [SerializeField] private int ROWS = 10;
+    [SerializeField] private int COLS = 10;
 
     private float cellWidth;
     private float cellHeight;
 
-    private ProtoMSCell[,] grid = new ProtoMSCell[ROWS, COLS];
+    private ProtoMSCell[,] grid;
     [SerializeField] private GameObject cellPrefab;
 
 
@@ -21,6 +22,7 @@ public class ProtoMSGrid : Singleton<ProtoMSGrid>
 
     private void Start()
     {
+        grid = new ProtoMSCell[ROWS, COLS];
         cellWidth = cellPrefab.GetComponent<SpriteRenderer>().bounds.size.x;
         cellHeight = cellPrefab.GetComponent<SpriteRenderer>().bounds.size.y;
         CreateGrid();
@@ -97,5 +99,15 @@ public class ProtoMSGrid : Singleton<ProtoMSGrid>
     {
         //Debug.Log("I'm getting Cell: " + x + ", " + y + ". ");
         return grid[x,y];
+    }
+
+    public int GetGridRows()
+    {
+        return ROWS;
+    }
+
+    public int GetGridCols()
+    {
+        return COLS;
     }
 }
