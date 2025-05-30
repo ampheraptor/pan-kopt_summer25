@@ -306,7 +306,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3195428804903419214, guid: 84961b3f4f884dd458957bc7eb46b5ec, type: 3}
       propertyPath: m_Name
-      value: MSGrid
+      value: MSClickGrid
       objectReference: {fileID: 0}
     - target: {fileID: 8207288023472933112, guid: 84961b3f4f884dd458957bc7eb46b5ec, type: 3}
       propertyPath: m_LocalPosition.x
