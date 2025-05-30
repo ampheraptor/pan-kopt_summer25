@@ -19,6 +19,8 @@ public class ProtoMSCell : MonoBehaviour, IPointerClickHandler
     [SerializeField] private SpriteRenderer mCover;
     [SerializeField] private GameObject mFlag;
 
+    private ProtoMSGrid parentGrid;
+
     void Awake()
     {
         
@@ -30,9 +32,10 @@ public class ProtoMSCell : MonoBehaviour, IPointerClickHandler
 
     
 
-    public void SetXY(int x, int y)
+    public void SetXY(int x, int y, ProtoMSGrid parentGrid)
     {
         this.x = x; this.y = y;
+        this.parentGrid = parentGrid;
     }
 
     public int GetNeighborMineCount()
@@ -217,6 +220,11 @@ public class ProtoMSCell : MonoBehaviour, IPointerClickHandler
             {
                 FlagRemove();
             }
+            if (mine)
+            {
+                FindFirstObjectByType<RoundHandler>().ReportMineTriggered();
+            }
+            parentGrid.ReportRevealed(); //Q: what happens if the last unrevealed tile on the map is a mine? so we win and lose simultaneously?
         }
     }
 

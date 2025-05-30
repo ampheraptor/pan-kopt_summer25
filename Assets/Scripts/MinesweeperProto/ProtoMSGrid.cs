@@ -18,38 +18,47 @@ public class ProtoMSGrid : Singleton<ProtoMSGrid>
     public int minesRandomMin;
     public int minesRandomMax;
     private int totalMines;
+    private int totalSafeCells;
+    private int cellsRevealed = 0;
 
-    private void Start()
+    public void StartGrid()
     {
         cellWidth = cellPrefab.GetComponent<SpriteRenderer>().bounds.size.x;
         cellHeight = cellPrefab.GetComponent<SpriteRenderer>().bounds.size.y;
         CreateGrid();
         CenterMyself();
+        Debug.Log("started grid");
     }
-    private void CreateGrid() 
+
+    public void RestartGrid()
+    {
+        EraseGrid();
+        CreateGrid();
+    }
+    private void CreateGrid()
     {
         for (int y = 0; y < COLS; y++)
         {
             for (int x = 0; x < ROWS; x++)
             {
-                //Make a new cell
-                GameObject cell = Instantiate(cellPrefab, transform);
+                //Make a new cell 
+                ProtoMSCell cell = Instantiate(cellPrefab, transform).GetComponent<ProtoMSCell>();
                 //Put it in the 2D Array
-                grid[x, y] = cell.GetComponent<ProtoMSCell>();
+                grid[x, y] = cell;
                 //Give cell it's 2D coords
-                grid[x,y].SetXY(x, y);
+                grid[x, y].SetXY(x, y, this);
                 //Place it correctly
                 float newX = x * cellWidth;
                 float newY = y * cellHeight;
-                cell.transform.localPosition = new Vector3(newX,newY,0);
+                cell.transform.localPosition = new Vector3(newX, newY, 0);
             }
         }
 
         //place mines
         totalMines = Random.Range(minesRandomMin, minesRandomMax);
-        if(totalMines <= ROWS*COLS)
+        if (totalMines <= ROWS * COLS)
         {
-            for(int i = 0; i < totalMines; i++)
+            for (int i = 0; i < totalMines; i++)
             {
                 RandomEmptyCell().SetMine(true);
             }
@@ -65,6 +74,8 @@ public class ProtoMSGrid : Singleton<ProtoMSGrid>
                 grid[x, y].CountNeighborMines(); // needs to be in its own loop because otherwise it will try to count cells that dont exist yet
             }
         }
+        totalSafeCells = COLS * ROWS - totalMines;
+        cellsRevealed = 0;
     }
 
     private ProtoMSCell RandomEmptyCell()
@@ -78,7 +89,15 @@ public class ProtoMSGrid : Singleton<ProtoMSGrid>
         }
         return pms;
     }
-    
+
+    public void ReportRevealed()
+    {
+        cellsRevealed++;
+        if (cellsRevealed == totalSafeCells)
+        {
+            FindFirstObjectByType<RoundHandler>().ReportVictory();
+        }
+    }
 
     private void CenterMyself()
     {
@@ -87,8 +106,8 @@ public class ProtoMSGrid : Singleton<ProtoMSGrid>
         float newY = transform.position.y;
         float lengthOfGrid = cellWidth * COLS;
         float heightOfGrid = cellHeight * ROWS;
-        newX = newX - (lengthOfGrid / 2) + (cellWidth/2);
-        newY = newY - (heightOfGrid / 2) + (cellHeight /2); // ok literally don't know why this works. whatever
+        newX = newX - (lengthOfGrid / 2) + (cellWidth / 2);
+        newY = newY - (heightOfGrid / 2) + (cellHeight / 2); // ok literally don't know why this works. whatever
         transform.position = new Vector3(newX, newY, 0);
 
     }
@@ -96,6 +115,19 @@ public class ProtoMSGrid : Singleton<ProtoMSGrid>
     public ProtoMSCell GetCell(int x, int y)
     {
         //Debug.Log("I'm getting Cell: " + x + ", " + y + ". ");
-        return grid[x,y];
+        return grid[x, y];
     }
+
+    private void EraseGrid()
+    {
+        for (int y = 0; y < COLS; y++)
+        {
+            for (int x = 0; x < ROWS; x++)
+            {
+                Destroy(grid[x, y].gameObject);
+                grid[x, y] = null;
+            }
+        }
+    }
+
 }
