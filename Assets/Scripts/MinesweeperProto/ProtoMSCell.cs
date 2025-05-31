@@ -203,5 +203,10 @@ public abstract class ProtoMSCell : MonoBehaviour
             return false;
         }
     }
+
+    public void ShowNumber(bool reveal)
+    {
+        mCover.sortingOrder = (reveal) ? 0 : 1;
+    }
     
 }

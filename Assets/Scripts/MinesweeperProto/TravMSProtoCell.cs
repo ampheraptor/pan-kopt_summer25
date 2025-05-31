@@ -2,17 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TravMSProtoCell : MonoBehaviour
+public class TravMSProtoCell : ProtoMSCell
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+   //For testing, I will not use the Input System since I don't understand it yet...
 }

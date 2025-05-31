@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ProtoMSGrid : Singleton<ProtoMSGrid>
 {
@@ -109,5 +110,33 @@ public class ProtoMSGrid : Singleton<ProtoMSGrid>
     public int GetGridCols()
     {
         return COLS;
+    }
+
+    public void ToggleDebugNumbers(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            ShowNumbers();
+        }
+        else if (context.canceled)
+        {
+            HideNumbers();
+        }
+    }
+
+    private void ShowNumbers()
+    {
+        foreach (ProtoMSCell c in grid)
+        {
+            c.ShowNumber(true);
+        }
+    }
+
+    private void HideNumbers()
+    {
+        foreach (ProtoMSCell c in grid)
+        {
+            c.ShowNumber(false);
+        }
     }
 }
