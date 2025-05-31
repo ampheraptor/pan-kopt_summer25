@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8207288023472933112}
-  - component: {fileID: 5140613359137476340}
   - component: {fileID: 8725749621436162277}
+  - component: {fileID: 6872096848395306397}
   m_Layer: 0
   m_Name: MSTravGrid
   m_TagString: Untagged
@@ -33,23 +33,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5140613359137476340
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3195428804903419214}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e917043f9c6f2e8429135aa5ab2b0661, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ROWS: 10
-  COLS: 10
-  cellPrefab: {fileID: 4164294984385598141, guid: bad522af1f3db2f4b979f0ac4fb23ba4, type: 3}
-  minesRandomMin: 20
-  minesRandomMax: 20
 --- !u!114 &8725749621436162277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89,7 +72,7 @@ MonoBehaviour:
     m_ActionName: 'Player/Fire[/Mouse/leftButton]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5140613359137476340}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ProtoMSGrid, Assembly-CSharp
         m_MethodName: ToggleDebugNumbers
         m_Mode: 0
@@ -148,3 +131,21 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &6872096848395306397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3195428804903419214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de287f7bbe9c09b4e91573383a4b1773, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ROWS: 10
+  COLS: 10
+  cellPrefab: {fileID: 4164294984385598141, guid: bad522af1f3db2f4b979f0ac4fb23ba4, type: 3}
+  minesRandomMin: 0
+  minesRandomMax: 0
+  mTraverserPrefab: {fileID: 0}

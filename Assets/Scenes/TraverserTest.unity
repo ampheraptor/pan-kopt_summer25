@@ -119,6 +119,22 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &80460202 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6872096848395306397, guid: 14cc7d8e15948254ea632d2e1ee04751, type: 3}
+  m_PrefabInstance: {fileID: 1778263034}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de287f7bbe9c09b4e91573383a4b1773, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &570774663 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6494289039002019510, guid: 682a31ac66d191a4cb5a80258da8c928, type: 3}
+  m_PrefabInstance: {fileID: 7932111677008116766}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &662274618
 GameObject:
   m_ObjectHideFlags: 0
@@ -240,6 +256,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: MSTravGrid
       objectReference: {fileID: 0}
+    - target: {fileID: 6872096848395306397, guid: 14cc7d8e15948254ea632d2e1ee04751, type: 3}
+      propertyPath: minesRandomMax
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6872096848395306397, guid: 14cc7d8e15948254ea632d2e1ee04751, type: 3}
+      propertyPath: minesRandomMin
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6872096848395306397, guid: 14cc7d8e15948254ea632d2e1ee04751, type: 3}
+      propertyPath: mTraverserPrefab
+      value: 
+      objectReference: {fileID: 570774663}
     - target: {fileID: 8207288023472933112, guid: 14cc7d8e15948254ea632d2e1ee04751, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -279,6 +307,14 @@ PrefabInstance:
     - target: {fileID: 8207288023472933112, guid: 14cc7d8e15948254ea632d2e1ee04751, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8725749621436162277, guid: 14cc7d8e15948254ea632d2e1ee04751, type: 3}
+      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 80460202}
+    - target: {fileID: 8725749621436162277, guid: 14cc7d8e15948254ea632d2e1ee04751, type: 3}
+      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleDebugNumbers
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
