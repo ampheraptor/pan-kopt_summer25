@@ -23,6 +23,11 @@ public class ProtoMSGrid : Singleton<ProtoMSGrid>
 
     private void Start()
     {
+        Initialize();
+    }
+
+    protected void Initialize()
+    {
         grid = new ProtoMSCell[ROWS, COLS];
         cellWidth = cellPrefab.GetComponent<SpriteRenderer>().bounds.size.x;
         cellHeight = cellPrefab.GetComponent<SpriteRenderer>().bounds.size.y;
@@ -112,6 +117,9 @@ public class ProtoMSGrid : Singleton<ProtoMSGrid>
         return COLS;
     }
 
+    
+
+    //Called from Input system
     public void ToggleDebugNumbers(InputAction.CallbackContext context)
     {
         if (context.performed)
