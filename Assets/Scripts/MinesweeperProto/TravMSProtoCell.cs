@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class TravMSProtoCell : ProtoMSCell
 {
-   //For testing, I will not use the Input System since I don't understand it yet...
+   //Doesnt do anything yet, will be revealed by number press instead of clicking
 }

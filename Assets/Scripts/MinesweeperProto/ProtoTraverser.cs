@@ -4,9 +4,5 @@ using UnityEngine;
 
 public class ProtoTraverser : MonoBehaviour
 {
-    //Find Random Space starting in middle of board where neighbormines = 0
-    public void PlaceTraverser(ProtoMSCell cell)
-    {
-
-    }
+    //Doesnt do anything yet, will move with WASD by grid increments, wont be able to walk past edge of grid or "covered" cells
 }
