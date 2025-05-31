@@ -7,13 +7,13 @@ using UnityEngine.InputSystem;
 public class ProtoMSGrid : Singleton<ProtoMSGrid>
 {
     //These are constants but need to just be private so they can be exposed in the editor
-    [SerializeField] private int ROWS = 10;
-    [SerializeField] private int COLS = 10;
+    [SerializeField] protected int ROWS = 10;
+    [SerializeField] protected int COLS = 10;
 
     private float cellWidth;
     private float cellHeight;
 
-    private ProtoMSCell[,] grid;
+    protected ProtoMSCell[,] grid;
     [SerializeField] private GameObject cellPrefab;
 
 
@@ -75,7 +75,7 @@ public class ProtoMSGrid : Singleton<ProtoMSGrid>
         }
     }
 
-    private ProtoMSCell RandomEmptyCell()
+    protected ProtoMSCell RandomEmptyCell()
     {
         ProtoMSCell pms = grid[Random.Range(0, ROWS), Random.Range(0, COLS)];
         if (pms.GetMine())
