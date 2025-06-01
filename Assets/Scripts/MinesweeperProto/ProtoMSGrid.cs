@@ -20,6 +20,8 @@ public class ProtoMSGrid : Singleton<ProtoMSGrid>
     public int minesRandomMin;
     public int minesRandomMax;
     private int totalMines;
+    private int totalSafeCells = 0;
+    private int cellsRevealed;
 
     private void Start()
     {
@@ -74,6 +76,9 @@ public class ProtoMSGrid : Singleton<ProtoMSGrid>
                 grid[x, y].CountNeighborMines(); // needs to be in its own loop because otherwise it will try to count cells that dont exist yet
             }
         }
+
+        totalSafeCells = COLS * ROWS - totalMines;
+        cellsRevealed = 0;
     }
 
     protected ProtoMSCell RandomEmptyCell()
