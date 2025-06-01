@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ProtoMSCell : MonoBehaviour
+public class ProtoMSCell : MonoBehaviour, IPointerClickHandler
 {
     protected bool mine = false;
     protected bool revealed = false;
@@ -232,6 +232,7 @@ public class ProtoMSCell : MonoBehaviour
     public void OnPointerClick(PointerEventData eventData)
     {
         //If this is a clickable grid
+        
         if (parentGrid.GetClickable())
         {
             if (eventData.button == PointerEventData.InputButton.Left) //left click - reveal

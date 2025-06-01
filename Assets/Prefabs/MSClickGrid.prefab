@@ -48,6 +48,7 @@ MonoBehaviour:
   ROWS: 10
   COLS: 10
   cellPrefab: {fileID: 4164294984385598141, guid: d171973b27fe25445bc7e749089f9543, type: 3}
+  clickable: 1
   minesRandomMin: 20
   minesRandomMax: 20
 --- !u!114 &8657604177694040737
