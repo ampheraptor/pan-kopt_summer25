@@ -16,9 +16,13 @@ public class ProtoMSGrid : MonoBehaviour
     protected ProtoMSCell[,] grid;
     [SerializeField] private GameObject cellPrefab;
 
+    [SerializeField] private bool clickable;
+
 
     public int minesRandomMin;
     public int minesRandomMax;
+
+
     private int totalMines;
     private int totalSafeCells = 0;
     private int cellsRevealed;
@@ -185,6 +189,11 @@ public class ProtoMSGrid : MonoBehaviour
                 grid[x, y] = null;
             }
         }
+    }
+
+    public bool GetClickable()
+    {
+        return clickable;
     }
 
 }

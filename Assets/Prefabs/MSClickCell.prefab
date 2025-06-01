@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 725723954209668784}
   - component: {fileID: 3669969946443881890}
   - component: {fileID: 8470286303026205051}
-  - component: {fileID: 1093092385176037993}
+  - component: {fileID: 7466936812513550133}
   m_Layer: 6
   m_Name: MSClickCell
   m_TagString: Untagged
@@ -137,7 +137,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &1093092385176037993
+--- !u!114 &7466936812513550133
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -146,7 +146,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4164294984385598141}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca1ff9e5972a6034b9242e3e041c794c, type: 3}
+  m_Script: {fileID: 11500000, guid: 1aef3e381aa760443bce1099239a3254, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   mText: {fileID: 2661445719477114541}
