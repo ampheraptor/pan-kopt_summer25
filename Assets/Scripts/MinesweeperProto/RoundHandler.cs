@@ -18,7 +18,7 @@ public class RoundHandler : MonoBehaviour
 
     private void Start()
     {
-        grid = FindFirstObjectByType<ProtoMSGrid>();
+        grid = ProtoMSGrid.instance;
         grid.StartGrid();
     }
 

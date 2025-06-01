@@ -200,7 +200,15 @@ public abstract class ProtoMSCell : MonoBehaviour
             {
                 FindFirstObjectByType<RoundHandler>().ReportMineTriggered();
             }
-            parentGrid.ReportRevealed(); //Q: what happens if the last unrevealed tile on the map is a mine? so we win and lose simultaneously?
+            if (parentGrid != null)
+            {
+                parentGrid.ReportRevealed(); //Q: what happens if the last unrevealed tile on the map is a mine? so we win and lose simultaneously?
+            }
+            else
+            {
+                ProtoMSGrid.instance.ReportRevealed();
+            }
+            
         }
     }
 

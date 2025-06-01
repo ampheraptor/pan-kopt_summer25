@@ -23,6 +23,20 @@ public class ProtoMSGrid : Singleton<ProtoMSGrid>
     private int totalSafeCells = 0;
     private int cellsRevealed;
 
+    public void StartGrid()
+    {
+        cellWidth = cellPrefab.GetComponent<SpriteRenderer>().bounds.size.x;
+        cellHeight = cellPrefab.GetComponent<SpriteRenderer>().bounds.size.y;
+        CreateGrid();
+        CenterMyself();
+        Debug.Log("started grid");
+    }
+
+    public void RestartGrid()
+    {
+        EraseGrid();
+        CreateGrid();
+    }
     private void Start()
     {
         Initialize();
