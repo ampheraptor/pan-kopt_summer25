@@ -30,7 +30,11 @@ public abstract class ProtoMSCell : MonoBehaviour
         //mText.enabled = false;
     }
 
-    
+    public void SetXY(int x, int y)
+    {
+        this.x = x; this.y = y;
+        
+    }
 
     public void SetXY(int x, int y, ProtoMSGrid parentGrid)
     {

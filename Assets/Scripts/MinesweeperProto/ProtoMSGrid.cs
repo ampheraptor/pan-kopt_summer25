@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ProtoMSGrid : Singleton<ProtoMSGrid>
 {
@@ -99,12 +100,6 @@ public class ProtoMSGrid : Singleton<ProtoMSGrid>
         newY = newY - (heightOfGrid / 2) + (cellHeight / 2); // ok literally don't know why this works. whatever
         transform.position = new Vector3(newX, newY, 0);
 
-    }
-
-    public ProtoMSCell GetCell(int x, int y)
-    {
-        //Debug.Log("I'm getting Cell: " + x + ", " + y + ". ");
-        return grid[x, y];
     }
 
     public int GetGridRows()
