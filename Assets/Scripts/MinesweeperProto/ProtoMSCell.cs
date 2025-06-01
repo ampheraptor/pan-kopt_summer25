@@ -4,20 +4,20 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public abstract class ProtoMSCell : MonoBehaviour
+public class ProtoMSCell : MonoBehaviour, IPointerClickHandler
 {
-    protected bool mine = false;
-    protected bool revealed = false;
-    protected bool flagged = false;
+    private bool mine = false;
+    private bool revealed = false;
+    private bool flagged = false;
   
-    protected int x, y;
+    private int x, y;
 
-    protected int neighborMineCount = 0;
-    protected int neighborFlagCount => GetNeighborFlagCount();
+    private int neighborMineCount = 0;
+    private int neighborFlagCount => GetNeighborFlagCount();
 
-    [SerializeField] protected TextMeshPro mText;
-    [SerializeField] protected SpriteRenderer mCover;
-    [SerializeField] protected GameObject mFlag;
+    [SerializeField] private TextMeshPro mText;
+    [SerializeField] private SpriteRenderer mCover;
+    [SerializeField] private GameObject mFlag;
 
     private ProtoMSGrid parentGrid;
 
@@ -111,7 +111,35 @@ public abstract class ProtoMSCell : MonoBehaviour
         }
     }
 
-    protected void ToggleFlag()
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.button == PointerEventData.InputButton.Left) //left click - reveal
+        {
+            if (!flagged) //flagged mines are not allowed to be left-clicked - nothing will happen.
+            {
+                if (mine)
+                {
+                    RevealSingle();
+                }
+                else
+                {
+                    RevealRecursive();
+                }
+            }
+        } else if(eventData.button == PointerEventData.InputButton.Right) //right click - for unrevealed, toggle flag. for revealed, if right # of flags, reveal adjacent.
+        {
+            if (!revealed) //revealed tiles cannot be flagged manually
+            {
+                ToggleFlag();
+            } else if (neighborFlagCount == neighborMineCount) //right click revealed reveals adjacents
+            { //only does this if flag count == mine count; i.e. you (probably) got the flags "correct"
+                RevealAdjacent(false);
+            }
+
+        }
+    } 
+
+    void ToggleFlag()
     { 
         if (!flagged)
         {
@@ -123,14 +151,14 @@ public abstract class ProtoMSCell : MonoBehaviour
         }
 }
 
-    protected void FlagPlace()
+    void FlagPlace()
     {
 
         flagged = true;
         mFlag.SetActive(true);
     }
 
-    protected void FlagRemove()
+    void FlagRemove()
     {
         flagged = false;
         mFlag.SetActive(false);
@@ -202,7 +230,7 @@ public abstract class ProtoMSCell : MonoBehaviour
 
     public bool IsValidCoord(int x, int y)
     {
-        if (x >= 0 && x < ProtoMSGrid.instance.GetGridRows() && y >= 0 && y < ProtoMSGrid.instance.GetGridCols())
+        if (x >= 0 && x < ProtoMSGrid.ROWS && y >= 0 && y < ProtoMSGrid.COLS)
         {
             return true;
         }
@@ -210,11 +238,6 @@ public abstract class ProtoMSCell : MonoBehaviour
         {
             return false;
         }
-    }
-
-    public void ShowNumber(bool reveal)
-    {
-        mCover.sortingOrder = (reveal) ? 0 : 1;
     }
     
 }
