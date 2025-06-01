@@ -10,8 +10,8 @@ public class ProtoMSGrid : MonoBehaviour
     [SerializeField] protected int ROWS = 10;
     [SerializeField] protected int COLS = 10;
 
-    private float cellWidth;
-    private float cellHeight;
+    protected float cellWidth;
+    protected float cellHeight;
 
     protected ProtoMSCell[,] grid;
     [SerializeField] private GameObject cellPrefab;
@@ -27,9 +27,13 @@ public class ProtoMSGrid : MonoBehaviour
     private int totalSafeCells = 0;
     private int cellsRevealed;
 
-    public void StartGrid()
+    public virtual void StartGrid() //Virtual is so child Traverser grid can override
     {
-        Initialize();
+        grid = new ProtoMSCell[ROWS, COLS];
+        cellWidth = cellPrefab.GetComponent<SpriteRenderer>().bounds.size.x;
+        cellHeight = cellPrefab.GetComponent<SpriteRenderer>().bounds.size.y;
+        CreateGrid();
+        CenterMyself();
     }
 
     public void RestartGrid()
@@ -42,14 +46,7 @@ public class ProtoMSGrid : MonoBehaviour
        
     }
 
-    protected void Initialize()
-    {
-        grid = new ProtoMSCell[ROWS, COLS];
-        cellWidth = cellPrefab.GetComponent<SpriteRenderer>().bounds.size.x;
-        cellHeight = cellPrefab.GetComponent<SpriteRenderer>().bounds.size.y;
-        CreateGrid();
-        CenterMyself();
-    }
+  
     private void CreateGrid()
     {
         for (int y = 0; y < COLS; y++)

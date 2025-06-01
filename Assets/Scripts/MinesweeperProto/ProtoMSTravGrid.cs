@@ -6,10 +6,13 @@ public class ProtoMSTravGrid : ProtoMSGrid
 {
     [SerializeField] private GameObject mTraverserPrefab;
 
-    protected void Initalize()
+    private ProtoTraverser mTraverser;
+
+    public override void StartGrid()
     {
-        Initalize();
+        base.StartGrid();
         PlaceTraverser();
+        mTraverser.SetStepSize(cellWidth);
 
     }
 
@@ -31,6 +34,7 @@ public class ProtoMSTravGrid : ProtoMSGrid
         ProtoMSCell emptyCell = RandomNoNeighborCell();
         GameObject trav = Instantiate(mTraverserPrefab);
         trav.transform.position = emptyCell.transform.position;
+        mTraverser = trav.GetComponent<ProtoTraverser>();
         emptyCell.RevealRecursive();
     }
 }
