@@ -57,7 +57,7 @@ public abstract class ProtoMSCell : MonoBehaviour
                 //Check if valid, this line should make sure we don't check outside of the 2d grid's index
                 if (IsValidCoord(this.x + x, this.y + y))
                 {
-                    if (ProtoMSGrid.instance.GetCell(x + this.x, y + this.y).flagged)
+                    if (parentGrid.GetCell(x + this.x, y + this.y).flagged)
                     {
                         total++;
                     }
@@ -93,7 +93,7 @@ public abstract class ProtoMSCell : MonoBehaviour
                     //Check if valid, this line should make sure we don't check outside of the 2d grid's index
                     if (IsValidCoord(this.x + x, this.y + y))
                     {
-                        if (ProtoMSGrid.instance.GetCell(x + this.x, y + this.y).GetMine())
+                        if (parentGrid.GetCell(x + this.x, y + this.y).GetMine())
                         {
                             //We don't need to skip ourselves because we are not a mine
                             total++;
@@ -156,7 +156,7 @@ public abstract class ProtoMSCell : MonoBehaviour
                         if (IsValidCoord(this.x + x, this.y + y))
                         {
                             //Don't need to check if it's not me because I am already revealed
-                            ProtoMSGrid.instance.GetCell(this.x + x, this.y + y).RevealRecursive(includeFlagged);
+                            parentGrid.GetCell(this.x + x, this.y + y).RevealRecursive(includeFlagged);
 
                         }
                     }
@@ -175,7 +175,7 @@ public abstract class ProtoMSCell : MonoBehaviour
                 //Check if valid, this line should make sure we don't check outside of the 2d grid's index
                 if (IsValidCoord(this.x + x, this.y + y))
                 {
-                    ProtoMSCell c = ProtoMSGrid.instance.GetCell(this.x + x, this.y + y);
+                    ProtoMSCell c = parentGrid.GetCell(this.x + x, this.y + y);
                     if(includeFlagged || c.flagged == false)
                     {
                         c.RevealRecursive(includeFlagged);
@@ -206,7 +206,7 @@ public abstract class ProtoMSCell : MonoBehaviour
             }
             else
             {
-                ProtoMSGrid.instance.ReportRevealed();
+                parentGrid.ReportRevealed();
             }
             
         }
@@ -214,7 +214,7 @@ public abstract class ProtoMSCell : MonoBehaviour
 
     public bool IsValidCoord(int x, int y)
     {
-        if (x >= 0 && x < ProtoMSGrid.instance.GetGridRows() && y >= 0 && y < ProtoMSGrid.instance.GetGridCols())
+        if (x >= 0 && x < parentGrid.GetGridRows() && y >= 0 && y < parentGrid.GetGridCols())
         {
             return true;
         }

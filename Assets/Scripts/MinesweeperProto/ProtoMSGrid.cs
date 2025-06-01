@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class ProtoMSGrid : Singleton<ProtoMSGrid>
+public class ProtoMSGrid : MonoBehaviour
 {
     //These are constants but need to just be private so they can be exposed in the editor
     [SerializeField] protected int ROWS = 10;
@@ -25,11 +25,7 @@ public class ProtoMSGrid : Singleton<ProtoMSGrid>
 
     public void StartGrid()
     {
-        cellWidth = cellPrefab.GetComponent<SpriteRenderer>().bounds.size.x;
-        cellHeight = cellPrefab.GetComponent<SpriteRenderer>().bounds.size.y;
-        CreateGrid();
-        CenterMyself();
-        Debug.Log("started grid");
+        Initialize();
     }
 
     public void RestartGrid()
@@ -39,7 +35,7 @@ public class ProtoMSGrid : Singleton<ProtoMSGrid>
     }
     private void Start()
     {
-        Initialize();
+       
     }
 
     protected void Initialize()
@@ -59,9 +55,10 @@ public class ProtoMSGrid : Singleton<ProtoMSGrid>
                 //Make a new cell
                 GameObject cell = Instantiate(cellPrefab, transform);
                 //Put it in the 2D Array
+               
                 grid[x, y] = cell.GetComponent<ProtoMSCell>();
                 //Give cell it's 2D coords
-                grid[x, y].SetXY(x, y);
+                grid[x, y].SetXY(x, y, this);
                 //Place it correctly
                 float newX = x * cellWidth;
                 float newY = y * cellHeight;

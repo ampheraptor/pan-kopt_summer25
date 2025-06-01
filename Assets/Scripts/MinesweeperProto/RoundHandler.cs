@@ -12,13 +12,13 @@ public enum roundState
 public class RoundHandler : MonoBehaviour
 {
     public roundState currentState;
-    private ProtoMSGrid grid;
+    [SerializeField] private ProtoMSGrid grid;
     [SerializeField] private GameObject deathPopup;
     [SerializeField] private GameObject victoryPopup;
 
     private void Start()
     {
-        grid = ProtoMSGrid.instance;
+        
         grid.StartGrid();
     }
 

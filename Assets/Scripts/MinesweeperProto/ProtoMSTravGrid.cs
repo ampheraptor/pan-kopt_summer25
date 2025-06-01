@@ -6,9 +6,9 @@ public class ProtoMSTravGrid : ProtoMSGrid
 {
     [SerializeField] private GameObject mTraverserPrefab;
 
-    private void Start()
+    protected void Initalize()
     {
-        Initialize();
+        Initalize();
         PlaceTraverser();
 
     }
