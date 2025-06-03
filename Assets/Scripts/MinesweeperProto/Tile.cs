@@ -200,7 +200,7 @@ public class NumberTile : Tile
             RevealSingle();
             if (CountNeighborMines() == 0)
             {
-                Debug.Log("NM count was 0 at " + x + ", " + y);
+                //Debug.Log("NM count was 0 at " + x + ", " + y);
                 for (int y = -1; y < 2; y++)
                 {
                     for (int x = -1; x < 2; x++)
