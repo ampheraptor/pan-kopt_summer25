@@ -80,6 +80,28 @@ public class ProtoMSGrid : MonoBehaviour
         {
             Debug.Log("ERROR in ProtoMSGrid.cs: mine count exceeds cell count");
         }
+
+        //assign tiles. it's weird that we're using data stored in PMSCell to determine what data-storing class it should have but this is temporary rest assured
+        for (int y = 0; y < COLS; y++)
+        {
+            for (int x = 0; x < ROWS; x++)
+            {
+                ProtoMSCell cell = grid[x, y];
+                Tile td;
+                if (cell.GetMine())
+                {
+                    td = new MineTile();
+                }
+                else
+                {
+                    td = new NumberTile();
+                }
+                cell.SetTileData(td);
+                td.StartTileData(cell, this, x, y); //important - must "StartTileData" when you create a new Tile
+
+            }
+        }
+
         //set numbers
         for (int y = 0; y < COLS; y++)
         {
@@ -160,6 +182,10 @@ public class ProtoMSGrid : MonoBehaviour
         }
     }
 
+    public void ReportMineTriggered() //for now should probably be simple, but later we may make this more complicated - e.g. if you have extra lives or a shield or w/e
+    {
+        FindFirstObjectByType<RoundHandler>().ReportMineTriggered();
+    }
     public void ReportRevealed()
     {
         cellsRevealed++;
@@ -169,6 +195,17 @@ public class ProtoMSGrid : MonoBehaviour
         }
     }
 
+    public bool IsValidCoord(int x, int y)
+    {
+        if (x >= 0 && x < GetGridRows() && y >= 0 && y < GetGridCols())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
     public ProtoMSCell GetCell(int x, int y)
     {

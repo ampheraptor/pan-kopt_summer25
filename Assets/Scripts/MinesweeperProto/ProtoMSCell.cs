@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 
 public class ProtoMSCell : MonoBehaviour, IPointerClickHandler
 {
+    public Tile tileData;
     protected bool mine = false;
     protected bool revealed = false;
     protected bool flagged = false;
@@ -28,6 +29,22 @@ public class ProtoMSCell : MonoBehaviour, IPointerClickHandler
        
 
         //mText.enabled = false;
+    }
+
+    public void SetTileData(Tile td)
+    {
+        tileData = td;
+    }
+
+    public void SetCellRevealed(bool visible)
+    {
+        mCover.enabled = visible;
+    }
+
+
+    public void SetFlagVisible(bool visible)
+    {
+        mFlag.SetActive(visible);
     }
 
     public void SetXY(int x, int y)
@@ -237,7 +254,8 @@ public class ProtoMSCell : MonoBehaviour, IPointerClickHandler
         {
             if (eventData.button == PointerEventData.InputButton.Left) //left click - reveal
             {
-                if (!flagged) //flagged mines are not allowed to be left-clicked - nothing will happen.
+                tileData.LeftClick();
+                /*if (!flagged) //flagged mines are not allowed to be left-clicked - nothing will happen.
                 {
                     if (mine)
                     {
@@ -247,18 +265,19 @@ public class ProtoMSCell : MonoBehaviour, IPointerClickHandler
                     {
                         RevealRecursive();
                     }
-                }
+                }*/
             }
             else if (eventData.button == PointerEventData.InputButton.Right) //right click - for unrevealed, toggle flag. for revealed, if right # of flags, reveal adjacent.
             {
-                if (!revealed) //revealed tiles cannot be flagged manually
+                tileData.RightClick();
+                /*if (!revealed) //revealed tiles cannot be flagged manually
                 {
                     ToggleFlag();
                 }
                 else if (neighborFlagCount == neighborMineCount) //right click revealed reveals adjacents
                 { //only does this if flag count == mine count; i.e. you (probably) got the flags "correct"
                     RevealAdjacent(false);
-                }
+                }*/
 
             }
         }
