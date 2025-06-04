@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -21,6 +22,8 @@ public class ProtoMSGrid : MonoBehaviour
 
     public int minesRandomMin;
     public int minesRandomMax;
+    [SerializeField] protected int numSpecialTiles; 
+    List<System.Type> specialTileTypes = new List<System.Type>(); //only put tiles in here
 
 
     private int totalMines;
@@ -32,6 +35,7 @@ public class ProtoMSGrid : MonoBehaviour
         grid = new ProtoMSCell[ROWS, COLS];
         cellWidth = cellPrefab.GetComponent<SpriteRenderer>().bounds.size.x;
         cellHeight = cellPrefab.GetComponent<SpriteRenderer>().bounds.size.y;
+        StartupSpecialTiles();
         CreateGrid();
         CenterMyself();
     }
@@ -41,11 +45,18 @@ public class ProtoMSGrid : MonoBehaviour
         EraseGrid();
         CreateGrid();
     }
-    private void Start()
+
+    private void StartupSpecialTiles()
     {
-       
+        specialTileTypes.Add(new MultiMine().GetType());
     }
 
+    private Tile NewRandomSpecialTile()
+    {
+        Type t = specialTileTypes[0];
+        Tile newTile = (Tile)Activator.CreateInstance(t); 
+        return newTile;
+    }
   
     private void CreateGrid()
     {
@@ -68,7 +79,7 @@ public class ProtoMSGrid : MonoBehaviour
         }
 
         //place mines
-        totalMines = Random.Range(minesRandomMin, minesRandomMax);
+        totalMines = UnityEngine.Random.Range(minesRandomMin, minesRandomMax);
         if (totalMines <= ROWS * COLS)
         {
             for (int i = 0; i < totalMines; i++)
@@ -96,10 +107,19 @@ public class ProtoMSGrid : MonoBehaviour
                 {
                     td = new NumberTile();
                 }
+                td.StartTileData(cell, this, x, y); //important - must "StartTileData" when you create a new Tile 
                 cell.SetTileData(td);
-                td.StartTileData(cell, this, x, y); //important - must "StartTileData" when you create a new Tile
-
             }
+        }
+
+        //place random special tiles
+        for(int i = 0; i < numSpecialTiles; i++)
+        {
+            Tile td = NewRandomSpecialTile();
+            ProtoMSCell cell = RandomEmptyCell();
+            cell.SetMine(true);
+            td.StartTileData(cell, this, cell.x, cell.y);
+            cell.SetTileData(td);
         }
 
         //set numbers
@@ -107,17 +127,17 @@ public class ProtoMSGrid : MonoBehaviour
         {
             for (int x = 0; x < ROWS; x++)
             {
-                grid[x, y].CountNeighborMines(); // needs to be in its own loop because otherwise it will try to count cells that dont exist yet
+                grid[x, y].tileData.LateStartTileData(); //sets numbers on number tiles...
             }
         }
 
-        totalSafeCells = COLS * ROWS - totalMines;
+        totalSafeCells = (COLS * ROWS) - totalMines - numSpecialTiles; //might need more complex handling for this if special tiles can be both good and bad
         cellsRevealed = 0;
     }
 
     protected ProtoMSCell RandomEmptyCell()
     {
-        ProtoMSCell pms = grid[Random.Range(0, ROWS), Random.Range(0, COLS)];
+        ProtoMSCell pms = grid[UnityEngine.Random.Range(0, ROWS), UnityEngine.Random.Range(0, COLS)];
         if (pms.GetMine())
         {
             return RandomEmptyCell(); //keeps iterating through random cells until it finds one that isn't a mine

@@ -8,10 +8,10 @@ using static Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics;
 public class Tile
 {
     RoundHandler rh;
-    ProtoMSCell clickableObject; //the clickableObject basically handles all the unity stuff and like, gameobjects and sprites and all of that. tiles are all about pure math and data.
+    protected ProtoMSCell clickableObject; //the clickableObject basically handles all the unity stuff and like, gameobjects and sprites and all of that. tiles are all about pure math and data.
     protected ProtoMSGrid parentGrid;
     protected bool flagged = false;
-    protected bool mine = false;
+    protected int mine = 0; //mine is now a number rather than a bool
     protected bool revealed = false; 
     protected int x, y;
 
@@ -22,6 +22,10 @@ public class Tile
         this.clickableObject = clickableObject;
         this.x = x;
         this.y = y;
+    }
+
+    public virtual void LateStartTileData() //basically, more startup functions but "later", e.g. for number tiles to count their neighbors once the mines have already been placed.
+    {
     }
      
     /*public Tile(ProtoMSCell clickableObject, ProtoMSGrid grid)
@@ -63,7 +67,7 @@ public class Tile
                 flagged = false;
                 clickableObject.SetFlagVisible(false);
             }
-            if (mine)
+            if (mine > 0)
             {
                 parentGrid.ReportMineTriggered();
             }
@@ -79,7 +83,7 @@ public class Tile
         }
     }
 
-    public virtual bool GetMine()
+    public virtual int GetMine()
     { 
         return mine;
     }
@@ -120,14 +124,13 @@ public class MineTile : Tile
 {
     public override void StartTileData(ProtoMSCell clickableObject, ProtoMSGrid grid, int x, int y)
     {
-        this.mine = true;
+        this.mine = 1;
         base.StartTileData(clickableObject, grid,x ,y);
     } 
 }
 
 public class NumberTile : Tile
 {
-     
     public override void TryReveal(bool forceIncludeFlags)
     { 
         RevealRecursive(forceIncludeFlags);
@@ -154,23 +157,28 @@ public class NumberTile : Tile
                 //Check if valid, this line should make sure we don't check outside of the 2d grid's index
                 if (parentGrid.IsValidCoord(this.x + x, this.y + y))
                 {
-                    if (parentGrid.GetCell(x + this.x, y + this.y).tileData.GetMine())
+                    int m = parentGrid.GetCell(x + this.x, y + this.y).tileData.GetMine();
+                    if (m > 0)
                     {
                         //We don't need to skip ourselves because we are not a mine
                         //ummm acktually we do, because we're leaving it open to interpretation how tiles work. maybe the number-mine tile will be a thing later who knows.
-                        if(this.x == x && this.y == y)
-                        {
-                            //Debug.Log("rejecting " + x + "/" + this.x + " and " + y + "/" + this.y);
-                        } else
-                        {
-                            total++;
-                        }
+                        total += m;
                     }
 
                 }
             }
         }
         return total;
+    }
+
+    public override void LateStartTileData()
+    {
+        base.LateStartTileData();
+        string s = CountNeighborMines() + "";
+        if(s != "0")
+        {
+            clickableObject.SetTileText(s);
+        }
     }
 
     public void RevealAdjacent(bool includeFlagged = false) //reveals all adjacent tiles regardless of contents. non-recursive.
@@ -236,5 +244,14 @@ public class NumberTile : Tile
             }
         }
         return total;
+    }
+}
+
+public class MultiMine : MineTile
+{
+    public override void StartTileData(ProtoMSCell clickableObject, ProtoMSGrid grid, int x, int y)
+    {
+        base.StartTileData(clickableObject, grid, x, y);
+        this.mine = 2;
     }
 }

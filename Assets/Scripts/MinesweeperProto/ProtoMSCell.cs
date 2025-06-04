@@ -11,7 +11,7 @@ public class ProtoMSCell : MonoBehaviour, IPointerClickHandler
     protected bool revealed = false;
     protected bool flagged = false;
   
-    protected int x, y;
+    public int x, y;
 
     protected int neighborMineCount = 0;
     protected int neighborFlagCount => GetNeighborFlagCount();
@@ -34,6 +34,10 @@ public class ProtoMSCell : MonoBehaviour, IPointerClickHandler
     public void SetTileData(Tile td)
     {
         tileData = td;
+
+        //debug
+        //mFlag.GetComponent<TextMeshPro>().text = td.GetMine() + "";
+        //SetFlagVisible(true);
     }
 
     public void SetCellRevealed(bool visible)
@@ -95,6 +99,11 @@ public class ProtoMSCell : MonoBehaviour, IPointerClickHandler
     public bool GetMine()
     {
         return mine;
+    }
+
+    public void SetTileText(string text)
+    {
+        mText.text = text;
     }
 
     public void CountNeighborMines()
