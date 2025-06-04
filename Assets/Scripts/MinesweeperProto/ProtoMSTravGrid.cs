@@ -35,6 +35,6 @@ public class ProtoMSTravGrid : ProtoMSGrid
         GameObject trav = Instantiate(mTraverserPrefab);
         trav.transform.position = emptyCell.transform.position;
         mTraverser = trav.GetComponent<ProtoTraverser>();
-        emptyCell.RevealRecursive();
+        emptyCell.RevealRecursive(true);
     }
 }

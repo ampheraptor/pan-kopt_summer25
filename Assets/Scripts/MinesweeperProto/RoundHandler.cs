@@ -9,7 +9,7 @@ public enum roundState
     Died
 }
 
-public class RoundHandler : MonoBehaviour
+public class RoundHandler : Singleton<RoundHandler>
 {
     public roundState currentState;
     [SerializeField] private ProtoMSGrid grid;

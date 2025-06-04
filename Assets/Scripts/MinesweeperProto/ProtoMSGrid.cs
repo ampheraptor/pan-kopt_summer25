@@ -23,7 +23,7 @@ public class ProtoMSGrid : MonoBehaviour
     public int minesRandomMin;
     public int minesRandomMax;
     [SerializeField] protected int numSpecialTiles; 
-    List<System.Type> specialTileTypes = new List<System.Type>(); //only put tiles in here
+    List<System.Type> specialTileTypes = new List<System.Type>(); //only put tiles in here 
 
 
     private int totalMines;
@@ -150,7 +150,7 @@ public class ProtoMSGrid : MonoBehaviour
 
     private void CenterMyself()
     {
-        //Request page help on this, it's not exactly right
+        
         float newX = transform.position.x;
         float newY = transform.position.y;
         float lengthOfGrid = cellWidth * COLS;
