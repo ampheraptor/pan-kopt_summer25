@@ -20,10 +20,20 @@ public class ProtoMSTravGrid : ProtoMSGrid
     {
         //Copied functionality of RandomEmpty CEll
         ProtoMSCell pms = grid[Random.Range(0, ROWS), Random.Range(0, COLS)];
-        if (pms.GetMine() || pms.GetNeighborMineCount() > 0)
+        if (pms.tileData.GetType() != typeof(NumberTile))
         {
             return RandomNoNeighborCell();
+            
         }
+        else
+        {
+            NumberTile nt = (NumberTile)pms.tileData;
+            if (nt.GetMine() > 0 || nt.GetNeighorMineCount() > 0){
+                return RandomNoNeighborCell();
+            }
+            
+        }
+
 
         return pms;
 

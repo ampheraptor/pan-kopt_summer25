@@ -14,6 +14,7 @@ public class Tile
     protected int mine = 0; //mine is now a number rather than a bool
     protected bool revealed = false; 
     protected int x, y;
+    protected int neighborMineCount;
 
 
     public virtual void StartTileData(ProtoMSCell clickableObject, ProtoMSGrid grid, int x, int y)
@@ -168,7 +169,13 @@ public class NumberTile : Tile
                 }
             }
         }
+        neighborMineCount = total;
         return total;
+    }
+
+    public int GetNeighorMineCount()
+    {
+        return neighborMineCount;
     }
 
     public override void LateStartTileData()
