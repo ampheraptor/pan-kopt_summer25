@@ -22,9 +22,17 @@ public class RoundHandler : Singleton<RoundHandler>
         grid.StartGrid();
     }
 
-    public void ReportMineTriggered() //any mine can tell the round handler that it was detonated, RH decides what to do next
+    public void ReportMineTriggered(Item triggeredBy=null) //any mine can tell the round handler that it was detonated, RH decides what to do next
     {
-        TriggerDeath();
+        if(triggeredBy && triggeredBy.overrideFailure)
+        {
+            Debug.Log("item " + triggeredBy.gameObject.name + " override the failstate it triggered");
+        }
+        else
+        {
+            TriggerDeath();
+
+        }
     }
 
     public void ReportVictory()

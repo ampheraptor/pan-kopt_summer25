@@ -42,21 +42,26 @@ public class Tile
 
     public virtual void LeftClick()
     {
-        if (!flagged) //flagged mines are not allowed to be left-clicked - nothing will happen.
+        if (ItemManager.instance.selectedItem)
         {
-            TryReveal();
+            ItemManager.instance.UseSelectedItem(x, y);
         }
+        else
+        {
+            if (!flagged) //flagged mines are not allowed to be left-clicked - nothing will happen.
+            {
+                TryReveal();
+            }
+        }
+        
     }
 
     public virtual void RightClick()
     {
-        if (!revealed)
-        {
-            ToggleFlag();
-        }
+        TryFlag();
     }
 
-    public virtual void RevealSingle() // For public use, reveals self
+    public virtual void RevealSingle(Item triggeredBy = null) // For public use, reveals self
     {
         if (!revealed) //If not already revealed, might be redudnant check but just in case
         {
@@ -70,7 +75,7 @@ public class Tile
             }
             if (mine > 0)
             {
-                parentGrid.ReportMineTriggered();
+                parentGrid.ReportMineTriggered(triggeredBy);
             }
             if (parentGrid != null)
             {
@@ -83,6 +88,15 @@ public class Tile
 
         }
     }
+
+    public void TryFlag()
+    {
+        if (!revealed)
+        {
+            ToggleFlag();
+        }
+    }
+
 
     public virtual int GetMine()
     { 
@@ -106,7 +120,7 @@ public class Tile
         }
     }
 
-    protected void FlagPlace()
+    public void FlagPlace()
     {
 
         flagged = true;
