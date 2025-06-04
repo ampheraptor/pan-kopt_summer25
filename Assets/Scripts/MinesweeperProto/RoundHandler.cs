@@ -61,4 +61,9 @@ public class RoundHandler : Singleton<RoundHandler>
             grid.RestartGrid();
         }
     }
+
+    public ProtoMSGrid GetGrid()
+    {
+        return grid;
+    }
 }
