@@ -30,8 +30,6 @@ public class ProtoTraverser : MonoBehaviour
         }
     }
 
-   
-
     private IEnumerator Movement(Vector2 dir)
     {
         //Prevent diagonal movement
@@ -42,11 +40,9 @@ public class ProtoTraverser : MonoBehaviour
         dir.y = newY;
         if (SetCurrentCell(currentCell.x + (int)dir.x, currentCell.y + (int)dir.y))
         {
-           
-            Debug.Log("Applying this vector: " + dir);
+            //Debug.Log("Applying this vector: " + dir);
             Vector3 moveDir = new Vector3(dir.x, dir.y, 0) * mstepSize;
             transform.position += moveDir;
-           
         }
         //Rotation
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90;
@@ -57,8 +53,6 @@ public class ProtoTraverser : MonoBehaviour
         movementCoroutine = null;
     }
 
-
-    
     public void SetStepSize(float stepSize)
     {
         mstepSize = stepSize;
@@ -77,29 +71,21 @@ public class ProtoTraverser : MonoBehaviour
         {
             if (g.IsValidCoord(x, y)) // am I going out of bounds? (Outisde of the grid?)
             {
-                // Is the cell in front of me covered?
-                if (g.GetCell(x, y).tileData.GetRevealed())
+                if (g.GetCell(x, y).tileData.GetRevealed())// Is the cell in front of me covered?
                 {
                     currentCell = g.GetCell(x, y); // The cell I want to travel to is within bounds and is revealed
                     return true;
                 }
-                else // Cell is not yet revealed
-                {
-                    Debug.Log("That cell is not yet revealed");
-                    return false;
-                }
                 
             }
-            else //Trying to travel out of bounds
-            {
-                Debug.Log("That cell does not exist");
-                return false;
-            }
+           
         }
-        else //Current cell is null (?)
-        {
-            return false;
-        }
+        
+        return false;
 
     }
+
+
+
+
 }
