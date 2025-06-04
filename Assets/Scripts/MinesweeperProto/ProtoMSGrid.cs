@@ -204,14 +204,14 @@ public class ProtoMSGrid : MonoBehaviour
 
     public void ReportMineTriggered() //for now should probably be simple, but later we may make this more complicated - e.g. if you have extra lives or a shield or w/e
     {
-        FindFirstObjectByType<RoundHandler>().ReportMineTriggered();
+       RoundHandler.instance.ReportMineTriggered();
     }
     public void ReportRevealed()
     {
         cellsRevealed++;
         if (cellsRevealed == totalSafeCells)
         {
-            FindFirstObjectByType<RoundHandler>().ReportVictory();
+           RoundHandler.instance.ReportVictory();
         }
     }
 
