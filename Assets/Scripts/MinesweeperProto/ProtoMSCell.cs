@@ -189,6 +189,11 @@ public class ProtoMSCell : MonoBehaviour, IPointerClickHandler
             Debug.Log("Grid is not set to clickable, you cannot click the tile!!");
         }
     }
+
+    public bool GetRevealed()
+    {
+        return revealed;
+    }
         
 
 }

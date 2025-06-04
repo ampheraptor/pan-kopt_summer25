@@ -89,6 +89,11 @@ public class Tile
         }
     }
 
+    public bool GetRevealed()
+    {
+        return revealed;
+    }
+
     public void TryFlag()
     {
         if (!revealed)

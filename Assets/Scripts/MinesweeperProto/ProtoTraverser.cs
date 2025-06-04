@@ -34,25 +34,25 @@ public class ProtoTraverser : MonoBehaviour
 
     private IEnumerator Movement(Vector2 dir)
     {
+        //Prevent diagonal movement
+        dir.Normalize();
+        float newX = (dir.y != 0) ? 0 : dir.x;
+        float newY = (dir.x != 0) ? 0 : dir.y;
+        dir.x = newX;
+        dir.y = newY;
         if (SetCurrentCell(currentCell.x + (int)dir.x, currentCell.y + (int)dir.y))
         {
-            //Prevent diagonal movement
-            dir.Normalize();
-            float newX = (dir.y != 0) ? 0 : dir.x;
-            float newY = (dir.x != 0) ? 0 : dir.y;
-            dir.x = newX;
-            dir.y = newY;
-
+           
             Debug.Log("Applying this vector: " + dir);
             Vector3 moveDir = new Vector3(dir.x, dir.y, 0) * mstepSize;
             transform.position += moveDir;
-            //Rotation
-            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90;
-            body.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+           
         }
-        
-        
-        
+        //Rotation
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90;
+        body.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+
+
         yield return new WaitForEndOfFrame();
         movementCoroutine = null;
     }
@@ -69,24 +69,35 @@ public class ProtoTraverser : MonoBehaviour
         currentCell = cell;
     }
 
-    public bool SetCurrentCell(int x, int y)
+    public bool SetCurrentCell(int x, int y) // Handles collisions and not going out of bounds
     {
+
+        ProtoMSGrid g = RoundHandler.instance.GetGrid();
         if (currentCell != null)
         {
-            if (RoundHandler.instance.GetGrid().IsValidCoord(x, y))
+            if (g.IsValidCoord(x, y)) // am I going out of bounds? (Outisde of the grid?)
             {
-                currentCell = RoundHandler.instance.GetGrid().GetCell(x, y);
-                return true;
+                // Is the cell in front of me covered?
+                if (g.GetCell(x, y).tileData.GetRevealed())
+                {
+                    currentCell = g.GetCell(x, y); // The cell I want to travel to is within bounds and is revealed
+                    return true;
+                }
+                else // Cell is not yet revealed
+                {
+                    Debug.Log("That cell is not yet revealed");
+                    return false;
+                }
+                
             }
-            else
+            else //Trying to travel out of bounds
             {
                 Debug.Log("That cell does not exist");
                 return false;
             }
         }
-        else
+        else //Current cell is null (?)
         {
-           
             return false;
         }
 
