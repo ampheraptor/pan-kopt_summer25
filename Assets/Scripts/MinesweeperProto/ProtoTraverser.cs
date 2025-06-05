@@ -89,17 +89,34 @@ public class ProtoTraverser : MonoBehaviour
 
     public void OnTryRevealTile(InputAction.CallbackContext context)
     {
-        Debug.Log("E pressed");
+        if (GetInteractTile() != null)
+        {
+            GetInteractTile().tileData.TryReveal();
+        }
+
+
+    }
+
+    public void OnTryFlagTile(InputAction.CallbackContext context)
+    {
+       if (GetInteractTile()!= null)
+        {
+            GetInteractTile().tileData.TryFlag();
+        }
+
+    }
+
+    private ProtoMSCell GetInteractTile()
+    {
         //In actual game if applicable will need a conversion from Grid coords to Transform coords in GridManager, this is easy its just also easy to not do it because step size is really close to 1
         int x = currentCell.x + (int)lastDir.x;
         int y = currentCell.y + (int)lastDir.y;
-        if (CanInteract(x,y))
+        if (CanInteract(x, y))
         {
-            ProtoMSCell cell = RoundHandler.instance.GetGrid().GetCell(x, y);
-            cell.tileData.TryReveal();
+            return RoundHandler.instance.GetGrid().GetCell(x, y);
         }
-       
-        
+        return null;
+
     }
 
     public bool CanInteract(int x, int y)
