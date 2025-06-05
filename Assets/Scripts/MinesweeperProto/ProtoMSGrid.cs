@@ -40,7 +40,7 @@ public class ProtoMSGrid : MonoBehaviour
         CenterMyself();
     }
 
-    public void RestartGrid()
+    public virtual void RestartGrid()
     {
         EraseGrid();
         CreateGrid();

@@ -11,9 +11,20 @@ public class ProtoMSTravGrid : ProtoMSGrid
     public override void StartGrid()
     {
         base.StartGrid();
+        InitTravGrid();
+    }
+
+    private void InitTravGrid()
+    {
         PlaceTraverser();
         mTraverser.SetStepSize(cellWidth);
+    }
 
+    public override void RestartGrid()
+    {
+        base.RestartGrid();
+        Destroy(mTraverser.gameObject);
+        InitTravGrid();
     }
 
     private ProtoMSCell RandomNoNeighborCell()

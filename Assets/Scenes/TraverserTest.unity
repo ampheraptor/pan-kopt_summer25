@@ -182,6 +182,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1856898031418213020, guid: e072de712d37e8c4f8018acc587e700b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1743381523}
+    - target: {fileID: 1856898031418213020, guid: e072de712d37e8c4f8018acc587e700b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RestartLevel
+      objectReference: {fileID: 0}
     - target: {fileID: 3260710103020086280, guid: e072de712d37e8c4f8018acc587e700b, type: 3}
       propertyPath: m_Name
       value: RoundHandlerUI
@@ -265,6 +273,14 @@ PrefabInstance:
     - target: {fileID: 6445194520690224689, guid: e072de712d37e8c4f8018acc587e700b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7029825780050528454, guid: e072de712d37e8c4f8018acc587e700b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 8728595944206509606, guid: 65974de648f4e5441b27a5df9b673cb9, type: 3}
+    - target: {fileID: 7029825780050528454, guid: e072de712d37e8c4f8018acc587e700b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RestartLevel
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -495,6 +511,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 65974de648f4e5441b27a5df9b673cb9, type: 3}
+--- !u!114 &1743381523 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8728595944206509606, guid: 65974de648f4e5441b27a5df9b673cb9, type: 3}
+  m_PrefabInstance: {fileID: 1462874375}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7841f3a052cc6b64fb7c0055b2a10c6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1778263034
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -564,9 +591,33 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8725749621436162277, guid: 14cc7d8e15948254ea632d2e1ee04751, type: 3}
+      propertyPath: m_ActionEvents.Array.size
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8725749621436162277, guid: 14cc7d8e15948254ea632d2e1ee04751, type: 3}
+      propertyPath: m_ActionEvents.Array.data[14].m_ActionId
+      value: f57f8fe2-4f07-4380-bd33-218619d98e98
+      objectReference: {fileID: 0}
+    - target: {fileID: 8725749621436162277, guid: 14cc7d8e15948254ea632d2e1ee04751, type: 3}
+      propertyPath: m_ActionEvents.Array.data[14].m_ActionName
+      value: 'Player/Flag[/Keyboard/f]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 8725749621436162277, guid: 14cc7d8e15948254ea632d2e1ee04751, type: 3}
+      propertyPath: m_ActionEvents.Array.data[14].m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8725749621436162277, guid: 14cc7d8e15948254ea632d2e1ee04751, type: 3}
+      propertyPath: m_ActionEvents.Array.data[14].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8725749621436162277, guid: 14cc7d8e15948254ea632d2e1ee04751, type: 3}
       propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 80460202}
+    - target: {fileID: 8725749621436162277, guid: 14cc7d8e15948254ea632d2e1ee04751, type: 3}
+      propertyPath: m_ActionEvents.Array.data[14].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8725749621436162277, guid: 14cc7d8e15948254ea632d2e1ee04751, type: 3}
       propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: ToggleDebugNumbers
