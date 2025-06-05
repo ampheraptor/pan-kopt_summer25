@@ -215,6 +215,12 @@ public class ProtoMSGrid : MonoBehaviour
         }
     }
 
+    //Converts to int, make sure you're not passing in a cray number
+    public bool IsValidCoord(float x, float y)
+    {
+        return IsValidCoord((int)x, (int)y);
+    }
+
     public bool IsValidCoord(int x, int y)
     {
         if (x >= 0 && x < GetGridRows() && y >= 0 && y < GetGridCols())
@@ -225,6 +231,13 @@ public class ProtoMSGrid : MonoBehaviour
         {
             return false;
         }
+    }
+
+    //Just casts to int, make sure you're not plugging in a crazy number
+    public ProtoMSCell GetCell(float x, float y)
+    {
+        //Maybe debug log here showing if x or y isn't clean divisble
+        return GetCell((int)x, (int)y);
     }
 
     public ProtoMSCell GetCell(int x, int y)
@@ -249,5 +262,7 @@ public class ProtoMSGrid : MonoBehaviour
     {
         return clickable;
     }
+
+  
 
 }

@@ -319,7 +319,19 @@ MonoBehaviour:
     m_ActionId: e158de09-5744-479a-a5dc-7ac6e5a2b4f3
     m_ActionName: 'Player/Look[/Mouse/delta]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6634209828716652547}
+        m_TargetAssemblyTypeName: ProtoTraverser, Assembly-CSharp
+        m_MethodName: OnTryRevealTile
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 48357604-361d-495a-aedf-b749c5ea68df
     m_ActionName: 'Player/Fire[/Mouse/leftButton]'
   - m_PersistentCalls:
