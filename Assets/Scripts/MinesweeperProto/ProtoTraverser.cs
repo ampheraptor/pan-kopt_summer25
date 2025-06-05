@@ -158,7 +158,8 @@ public class ProtoTraverser : MonoBehaviour
         canvasFuelText.text = currentFuel.ToString();
         if (currentFuel <= 0)
         {
-            Debug.Log("You die");
+            //Same thing as just dying
+            RoundHandler.instance.ReportMineTriggered();
         }
     }
 
