@@ -27,6 +27,19 @@ public class ProtoMSTravGrid : ProtoMSGrid
         InitTravGrid();
     }
 
+    
+    public override void ReportMineTriggered(Item triggeredBy = null)
+    {
+        if (mTraverser.GetShield())
+        {
+            mTraverser.RestoreFuelFromMine();
+        }
+        else
+        {
+            base.ReportMineTriggered(triggeredBy);
+        }
+    }
+    
     private ProtoMSCell RandomNoNeighborCell()
     {
         //Copied functionality of RandomEmpty CEll

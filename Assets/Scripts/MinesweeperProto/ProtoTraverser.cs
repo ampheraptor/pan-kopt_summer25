@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -15,6 +17,22 @@ public class ProtoTraverser : MonoBehaviour
     [SerializeField]private Transform body;
     private ProtoMSCell currentCell;
 
+    [Header("Fuel")]
+    private float currentFuel;
+    [SerializeField] private float maxFuel;
+    private TextMeshProUGUI canvasFuelText;
+
+    [Header("Shield")]
+    [SerializeField] private GameObject shield;
+    [Tooltip("For now this is the same number as how much health you restore from disarming a mine")]
+    [SerializeField] private float shieldFuelPenalty;
+
+    private void Start()
+    {
+        currentFuel = maxFuel;
+        canvasFuelText = ProtoTravCanvas.instance.GetFuelText();
+        UpdateFuel(maxFuel); // Adding maxFuel will just set to max fuel
+    }
     public void OnMove(InputAction.CallbackContext context)
     {
         if (movementCoroutine == null)
@@ -104,6 +122,66 @@ public class ProtoTraverser : MonoBehaviour
             GetInteractTile().tileData.TryFlag();
         }
 
+    }
+
+    public void OnToggleShield(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+           
+            if (!GetShield())
+            {
+                
+                ActivateShield();
+            }
+            else
+            {
+                
+                DisableShield();
+            }
+        }
+        
+    }
+
+    private void UpdateFuel(float newFuel)
+    {
+       
+        if (currentFuel + newFuel >= maxFuel)
+        {
+            currentFuel = maxFuel;
+        }
+        else
+        {
+            currentFuel += newFuel;
+        }
+        
+        canvasFuelText.text = currentFuel.ToString();
+        if (currentFuel <= 0)
+        {
+            Debug.Log("You die");
+        }
+    }
+
+    public void RestoreFuelFromMine()
+    {
+        UpdateFuel(shieldFuelPenalty);//Plus because its restoring even though variable is called penalty
+        DisableShield();
+    }
+
+    private void ActivateShield()
+    {
+        shield.SetActive(true);
+        UpdateFuel(-shieldFuelPenalty);
+    }
+
+    private void DisableShield()
+    {
+        shield.SetActive(false);
+    }
+
+    public bool GetShield()
+    {
+        return shield.activeSelf;
     }
 
     private ProtoMSCell GetInteractTile()

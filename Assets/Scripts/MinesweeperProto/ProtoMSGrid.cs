@@ -202,7 +202,7 @@ public class ProtoMSGrid : MonoBehaviour
         }
     }
 
-    public void ReportMineTriggered(Item triggeredBy = null) //for now should probably be simple, but later we may make this more complicated - e.g. if you have extra lives or a shield or w/e
+    public virtual void ReportMineTriggered(Item triggeredBy = null) //for now should probably be simple, but later we may make this more complicated - e.g. if you have extra lives or a shield or w/e
     {
        RoundHandler.instance.ReportMineTriggered(triggeredBy);
     }
