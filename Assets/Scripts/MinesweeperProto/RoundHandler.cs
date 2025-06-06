@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public enum roundState
@@ -11,15 +12,24 @@ public enum roundState
 
 public class RoundHandler : Singleton<RoundHandler>
 {
+    [SerializeField] private int currentRound = 0;
     public roundState currentState;
+    [Header("UI")]
     [SerializeField] private ProtoMSGrid grid;
     [SerializeField] private GameObject deathPopup;
     [SerializeField] private GameObject victoryPopup;
+    [SerializeField] private TextMeshProUGUI roundText;
 
     private void Start()
     {
-        
         grid.StartGrid();
+        StartRound();
+    }
+
+    private void StartRound()
+    {
+        currentRound++;
+        roundText.text = string.Format("Round {0}", currentRound);
     }
 
     public void ReportMineTriggered(Item triggeredBy=null) //any mine can tell the round handler that it was detonated, RH decides what to do next
@@ -59,7 +69,20 @@ public class RoundHandler : Singleton<RoundHandler>
         }
     }
 
-    public void RestartLevel()
+    public void NextRound()
+    {
+        RestartLevel();
+        StartRound();
+    }
+
+    public void StartOver()
+    {
+        currentRound = 0;
+        RestartLevel();
+        StartRound();
+    }
+
+    private void RestartLevel()
     {
         if(currentState != roundState.InProgress)
         {
