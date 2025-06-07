@@ -25,12 +25,12 @@ public class InventoryManager : MonoBehaviour
 
     }
 
-    public void ResetInventory()
+    public void ResetInventory() // empties all items, sets button behavior. 
     {
         for (int i = 0; i < itemSlots.Count; i++)
         {
-            itemSlots[i].isFull = false;
-            itemSlots[i].thisItem = null;
+            itemSlots[i].thisItem = null; // empties item
+            itemSlots[i].isFull = false; // no full anymore!!
         }
 
 
@@ -60,7 +60,7 @@ public class InventoryManager : MonoBehaviour
 
 
 
-    public void UpdateMoneyTxt()
+    public void UpdateMoneyTxt() // honestly this is only its own function so it can be called from other scripts 
     {
         moneyText.text = currentMoney.ToString();
     }
@@ -98,7 +98,7 @@ public class InventoryManager : MonoBehaviour
 
 
 
-            // Optional: update the list if needed (not strictly necessary with reference types)
+            // update the list to have the item
             itemSlots[indexToFill] = slotToFill;
         }
         else
