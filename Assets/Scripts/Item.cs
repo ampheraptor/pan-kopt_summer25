@@ -20,10 +20,13 @@ public class Item : MonoBehaviour
     public Action action;
     public bool overrideFailure = false;
 
+    [Header("Shop Info")] // all relevant info for the shop, only cost for now
+    public int itemCost;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -41,14 +44,19 @@ public class Item : MonoBehaviour
         ItemManager.instance.SelectItem(this);
     }
 
+    public void BuyThisItem()
+    {
+        ItemManager.instance.BuyItem(this);
+    }
+
     public void UseItem(int x, int y)
     {
-        GenerateRangeList(x,y);
+        GenerateRangeList(x, y);
         GenerateAffectedList(cellsInRange);
-        foreach(ProtoMSCell cell in affectedCells)
+        foreach (ProtoMSCell cell in affectedCells)
         {
             DoActionOnCell(cell);
-        }  
+        }
     }
 
 
@@ -58,22 +66,22 @@ public class Item : MonoBehaviour
         int leftX = Mathf.Max(x - rangeFromClick, 0);
         int rightX = Mathf.Min(x + rangeFromClick, grid.GetGridCols() - 1);
         int bottomY = Mathf.Max(y - rangeFromClick, 0);
-        int topY= Mathf.Min(y + rangeFromClick, grid.GetGridRows() - 1);
-        for(int yIndex = bottomY; yIndex <= topY; yIndex++)
+        int topY = Mathf.Min(y + rangeFromClick, grid.GetGridRows() - 1);
+        for (int yIndex = bottomY; yIndex <= topY; yIndex++)
         {
             for (int xIndex = leftX; xIndex <= rightX; xIndex++)
             {
-                cellsInRange.Add(grid.GetCell(xIndex,yIndex));
+                cellsInRange.Add(grid.GetCell(xIndex, yIndex));
             }
         }
     }
-    
+
     void GenerateAffectedList(List<ProtoMSCell> inputList) //from the cells within range, make a new list of the ones that match the type that this item affects
     {
         affectedCells = new List<ProtoMSCell>();
-        for(int i = 0; i < inputList.Count; i++)
+        for (int i = 0; i < inputList.Count; i++)
         {
-            if(affectsAllCellTypes() || isCellAffected(inputList[i]))
+            if (affectsAllCellTypes() || isCellAffected(inputList[i]))
             {
                 affectedCells.Add(inputList[i]);
             }
