@@ -1162,23 +1162,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5140613359137476340, guid: 84961b3f4f884dd458957bc7eb46b5ec, type: 3}
       propertyPath: COLS
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5140613359137476340, guid: 84961b3f4f884dd458957bc7eb46b5ec, type: 3}
       propertyPath: ROWS
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5140613359137476340, guid: 84961b3f4f884dd458957bc7eb46b5ec, type: 3}
       propertyPath: minesRandomMax
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5140613359137476340, guid: 84961b3f4f884dd458957bc7eb46b5ec, type: 3}
       propertyPath: minesRandomMin
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5140613359137476340, guid: 84961b3f4f884dd458957bc7eb46b5ec, type: 3}
       propertyPath: numSpecialTiles
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8207288023472933112, guid: 84961b3f4f884dd458957bc7eb46b5ec, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1467,6 +1467,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedItem: {fileID: 0}
+  purchasedItem: {fileID: 0}
   currentItemText: {fileID: 146424156}
 --- !u!114 &1128937136
 MonoBehaviour:
