@@ -104,7 +104,7 @@ public class InventoryManager : MonoBehaviour
         else
         {
             Debug.Log("Whoops! All inventory slots used!");
-        }
+        } // test comment
     }
 }
 
