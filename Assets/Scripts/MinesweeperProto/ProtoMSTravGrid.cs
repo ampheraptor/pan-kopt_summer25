@@ -63,6 +63,15 @@ public class ProtoMSTravGrid : ProtoMSGrid
 
     }
 
+    //Didn't actually need this. Maybe will later
+    public Vector3 CellXYToWorldPos(int x, int y)
+    {
+        return grid[x, y].transform.localToWorldMatrix.GetPosition();
+        
+    }
+
+   
+
     private void PlaceTraverser()
     {
         ProtoMSCell emptyCell = RandomNoNeighborCell();

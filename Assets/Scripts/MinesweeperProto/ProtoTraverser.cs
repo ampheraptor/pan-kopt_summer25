@@ -56,7 +56,8 @@ public class ProtoTraverser : MonoBehaviour
         float newY = (dir.x != 0) ? 0 : dir.y;
         dir.x = newX;
         dir.y = newY;
-        //In actual game if applicable will need a conversion from Grid coords to Transform coords in GridManager, this is easy its just also easy to not do it because step size is really close to 1
+        
+        //Actually maybe not because stepsize will always be the width of the cell. so nvm
         if (SetCurrentCell(currentCell.x + (int)dir.x, currentCell.y + (int)dir.y))
         {
             //Debug.Log("Applying this vector: " + dir);
@@ -187,15 +188,23 @@ public class ProtoTraverser : MonoBehaviour
 
     private ProtoMSCell GetInteractTile()
     {
-        //In actual game if applicable will need a conversion from Grid coords to Transform coords in GridManager, this is easy its just also easy to not do it because step size is really close to 1
+       
+        
+        
         int x = currentCell.x + (int)lastDir.x;
         int y = currentCell.y + (int)lastDir.y;
+        
         if (CanInteract(x, y))
         {
             return RoundHandler.instance.GetGrid().GetCell(x, y);
         }
         return null;
 
+    }
+
+    public bool CanInteract(ProtoMSCell cell)
+    {
+        return CanInteract(cell.x, cell.y);
     }
 
     public bool CanInteract(int x, int y)

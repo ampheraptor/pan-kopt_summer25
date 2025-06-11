@@ -59,8 +59,9 @@ public class ProtoMSCell : MonoBehaviour, IPointerClickHandler
 
     public void SetXY(int x, int y, ProtoMSGrid parentGrid)
     {
-        this.x = x; this.y = y;
+        
         this.parentGrid = parentGrid;
+        SetXY(x, y);
     }
 
     public int GetNeighborMineCount()
